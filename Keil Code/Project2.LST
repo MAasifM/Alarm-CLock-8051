@@ -1,0 +1,237 @@
+C51 COMPILER V6.12  PROJECT2                                                               06/14/2021 16:17:28 PAGE 1   
+
+
+C51 COMPILER V6.12, COMPILATION OF MODULE PROJECT2
+OBJECT MODULE PLACED IN .\Project2.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE .\Project2.c DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include<stdio.h>
+   3          unsigned int i;
+   4          unsigned int j;
+   5          unsigned int k;
+   6          
+   7          unsigned int su=0;
+   8          unsigned int st=0;
+   9          unsigned int mu=0;
+  10          unsigned int mt=0;
+  11          unsigned int hu=0;
+  12          unsigned int ht=0;
+  13          
+  14          char hexvalue[60]={0x00,0x01,0x02,0x03,0x04,0x5,0x06,0x07,0x08,0x09,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x1
+             -7,0x18,0x19,0x20,0x21,0x22,0x23,0x24,0x25,0x26,0x27,0x28,0x29,0x30,0x31,0x32,0x33,0x34,0x35,0x36,0x37,0x38,0x39,0x40,0x4
+             -1,0x42,0x43,0x44,0x45,0x46,0x47,0x48,0x49,0x50,0x51,0x52,0x53,0x54,0x55,0x56,0x57,0x58,0x59};
+  15          // keypad rows
+  16          sbit keyrow1 = P1 ^ 0;				// 4x3 keypad Row 1
+  17          sbit keyrow2 = P1 ^ 1;				// 4x3 keypad Row 2
+  18          sbit keyrow3 = P1 ^ 2;				// 4x3 keypad Row 3
+  19          sbit keyrow4 = P1 ^ 3;				// 4x3 keypad Row 4
+  20          
+  21          //keypad column	
+  22          sbit keycolumn1 = P1 ^ 4;			// 4x3 keypad column 1
+  23          sbit keycolumn2 = P1 ^ 5;			// 4x3 keypad column 2
+  24          sbit keycolumn3 = P1 ^ 6;			// 4x3 keypad column 3
+  25          
+  26          sbit Snooze = P1 ^ 7;
+  27          void delay(unsigned int j)
+  28          {
+  29   1          int a, b;
+  30   1          for (a = 0; a < j; a++)
+  31   1          {
+  32   2              for (b = 0; b < 100; b++);
+  33   2          }
+  34   1      }
+  35          
+  36          int keypad()
+  37          {
+  38   1          int x = 0;
+  39   1          while (x == 0)
+  40   1          {
+  41   2      		// Algorithm for 4 x 3 keypad
+  42   2              // assign values for first row
+  43   2              keyrow1 = 0;
+  44   2              keyrow2 = 1;
+  45   2              keyrow3 = 1;
+  46   2              keyrow4 = 1;
+  47   2              if (keycolumn1 == 0)
+  48   2              {
+  49   3                  delay(1000);
+  50   3                  x = 1;
+  51   3                  return 1;
+  52   3              }
+  53   2              if (keycolumn2 == 0)
+C51 COMPILER V6.12  PROJECT2                                                               06/14/2021 16:17:28 PAGE 2   
+
+  54   2              {
+  55   3                  delay(1000);
+  56   3                  x = 1;
+  57   3                  return 2;
+  58   3              }
+  59   2              if (keycolumn3 == 0)
+  60   2              {
+  61   3                  delay(1000);
+  62   3                  x = 1;
+  63   3                  return 3;
+  64   3              }
+  65   2              // assign values for second row
+  66   2              keyrow1 = 1;
+  67   2              keyrow2 = 0;
+  68   2              keyrow3 = 1;
+  69   2              keyrow4 = 1;
+  70   2      
+  71   2              if (keycolumn1 == 0)
+  72   2              {
+  73   3                  delay(1000);
+  74   3                  x = 1;
+  75   3                  return 4;
+  76   3              }
+  77   2              if (keycolumn2 == 0)
+  78   2              {
+  79   3                  delay(1000);
+  80   3                  x = 1;
+  81   3                  return 5;
+  82   3              }
+  83   2              if (keycolumn3 == 0)
+  84   2              {
+  85   3                  delay(1000);
+  86   3                  x = 1;
+  87   3                  return 6;
+  88   3              }
+  89   2      
+  90   2              // assign values for third row
+  91   2              keyrow1 = 1;
+  92   2              keyrow2 = 1;
+  93   2              keyrow3 = 0;
+  94   2              keyrow4 = 1;
+  95   2              if (keycolumn1 == 0)
+  96   2              {
+  97   3                  delay(1000);
+  98   3                  x = 1;
+  99   3                  return 7;
+ 100   3              }
+ 101   2              if (keycolumn2 == 0)
+ 102   2              {
+ 103   3                  delay(1000);
+ 104   3                  x = 1;
+ 105   3                  return 8;
+ 106   3              }
+ 107   2              if (keycolumn3 == 0)
+ 108   2              {
+ 109   3                  delay(1000);
+ 110   3                  x = 1;
+ 111   3                  return 9;
+ 112   3              }
+ 113   2      
+ 114   2              // assign values for forth row
+ 115   2              keyrow1 = 1;
+C51 COMPILER V6.12  PROJECT2                                                               06/14/2021 16:17:28 PAGE 3   
+
+ 116   2              keyrow2 = 1;
+ 117   2              keyrow3 = 1;
+ 118   2              keyrow4 = 0;
+ 119   2      
+ 120   2              if (keycolumn2 == 0)
+ 121   2              {
+ 122   3                  delay(1000);
+ 123   3                  x = 1;
+ 124   3                  return 0;
+ 125   3              }
+ 126   2          }
+ 127   1      }
+ 128          
+ 129          void SetAlarm()
+ 130          {
+ 131   1      	while(1)
+ 132   1      	{
+ 133   2      		ht=keypad();
+ 134   2      		if(ht>2)
+ 135   2      		{
+ 136   3      			P3=0x00;
+ 137   3      			continue;
+ 138   3      		}
+ 139   2      		hu=keypad();
+ 140   2      		if(hu>3)
+ 141   2      		{
+ 142   3      			P3=0x00;
+ 143   3      			continue;
+ 144   3      		}
+ 145   2      		break;
+ 146   2      	}
+ 147   1      	P3=hexvalue[ht*10+hu];
+ 148   1      	while(1)
+ 149   1      	{
+ 150   2      		mt=keypad();
+ 151   2      		if(mt>6)
+ 152   2      		{
+ 153   3      			P2=0x00;
+ 154   3      			continue;
+ 155   3      		}
+ 156   2      		mu=keypad();
+ 157   2      		break;
+ 158   2      	}
+ 159   1      	P2=hexvalue[mt*10+mu];
+ 160   1      	while(1)
+ 161   1      	{
+ 162   2      		st=keypad();
+ 163   2      		if(st>6)
+ 164   2      		{
+ 165   3      			P0=0x00;
+ 166   3      			continue;
+ 167   3      		}
+ 168   2      		su=keypad();
+ 169   2      		break;
+ 170   2      	}
+ 171   1      	P0=hexvalue[st*10+su];
+ 172   1      }
+ 173          
+ 174          void main()
+ 175          {
+ 176   1      	i=0;
+ 177   1      	j=0;
+C51 COMPILER V6.12  PROJECT2                                                               06/14/2021 16:17:28 PAGE 4   
+
+ 178   1      	k=0;
+ 179   1      	SetAlarm();
+ 180   1      	while(1)
+ 181   1      	{
+ 182   2      		if(Snooze==0)
+ 183   2      		{
+ 184   3      			mu=mu+2;
+ 185   3      			if(mu==10)
+ 186   3      			{
+ 187   4      				mu=0;
+ 188   4      				mt++;
+ 189   4      				if(mt==6)
+ 190   4      				{
+ 191   5      					mt=0;
+ 192   5      					hu++;
+ 193   5      					if(hu==10)
+ 194   5      					{
+ 195   6      						hu=0;
+ 196   6      						ht++;
+ 197   6      					}
+ 198   5      				}
+ 199   4      			}
+ 200   3      			P0=hexvalue[st*10+su];
+ 201   3      			P2=hexvalue[mt*10+mu];
+ 202   3      			P3=hexvalue[ht*10+hu];
+ 203   3      			delay(1000);
+ 204   3      		}
+ 205   2      	}
+ 206   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    537    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     78       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
